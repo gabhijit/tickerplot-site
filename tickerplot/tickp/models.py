@@ -1,5 +1,34 @@
-from __future__ import unicode_literals
+# This is an auto-generated Django model module.
+# You'll have to do the following manually to clean this up:
+#     * Rearrange models' order
+#     * Make sure each model has one field with primary_key=True
+# Feel free to rename the models, but don't rename db_table values or field names.
+#
+# Also note: You'll have to insert the output of 'django-admin.py sqlcustom [appname]'
+# into your database.
 
 from django.db import models
 
-# Create your models here.
+class Histdatalog(models.Model):
+    date = models.TextField(primary_key=True) # This field type is a guess.
+    rows = models.IntegerField()
+    class Meta:
+        db_table = u'histdatalog'
+
+class Nsehistdata(models.Model):
+    date = models.IntegerField(primary_key=True) # This field type is a guess.
+    scrip = models.TextField(primary_key=True)
+    open = models.FloatField()
+    high = models.FloatField()
+    low = models.FloatField()
+    close = models.FloatField()
+    volume = models.FloatField()
+    class Meta:
+        db_table = u'nsehistdata'
+        ordering = ['date']
+
+class Scrips(models.Model):
+    symbol = models.TextField(primary_key=True, blank=True)
+    name = models.TextField(blank=True)
+    class Meta:
+        db_table = u'scrips'

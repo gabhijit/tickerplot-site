@@ -1,0 +1,4 @@
+1. Fix the look and feel using Bootstrap.
+2. Make deployment automatic using fabric.
+3. Fix the NSE historical data using new tools utils to download the data.
+4. Unit testing
