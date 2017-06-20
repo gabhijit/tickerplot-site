@@ -2,11 +2,14 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <!-- Adds support for the Chrome Frame IE plugin -->
-    <meta http-equiv="X-UA-Compatible" content="chrome=1">
+    <!-- tags required by bootstrap -->
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
 
-    <script type="text/javascript" src="{% static "tickp/jquery.js" %}"></script>
-    <script type="text/javascript" src="{% static "tickp/jquery.autocomplete.js" %}"></script>
+    <link rel="stylesheet" type="text/css" href="{% static "bootstrap/css/bootstrap.min.css" %}" />
+    <script type="text/javascript" src="{% static "jquery/js/jquery-3.2.1.min.js" %}"></script>
+    <script type="text/javascript" src="{% static "bootstrap/js/bootstrap.min.js" %}"></script>
     <script type="text/javascript" src="{% static "tickp/stats.js" %}"></script>
     <script type="text/javascript" src="{% static "tickp/jsta.js" %}"></script>
     <link rel="stylesheet" type="text/css" href="{% static "tickp/jquery.autocomplete.css" %}" />
@@ -295,7 +298,8 @@
     </script>
 
 <style>
-body {font-family: "Lucide Grande", Verdana, Lucida, Helvetica, Arial, sans-serif; font-size:10px;}
+/* body {font-family: "Lucide Grande", Verdana, Lucida, Helvetica, Arial, sans-serif; font-size:10px;} */
+body {padding-top : 50px}
 #chart { margin:20px; }
 #scripselect {font-size:11px;}
 #loading { position:absolute; left:250px; top:30px;z-index:500;}
@@ -308,10 +312,7 @@ body {font-family: "Lucide Grande", Verdana, Lucida, Helvetica, Arial, sans-seri
 #zoom {margin-left: 10px; display:inline;}
 #indicators {margin-left:10px; display:inline;}
 #current {margin-left:10px; display:inline;}
-.row {width:800px;margin:10px; display:block; }
-.chartoption {float:left;width:180px; height:40px;}
-.chartoption2 {float:left; width: 370px;}
-.chartoption3 {float: left;}
+/* .row {width:800px;margin:10px; display:block; } */
 #header {height:20px; border-bottom: 2px solid gray;}
 #header .fltright {float:right; padding-right:5px;}
 #footer {text-align:center;border-top:1px solid gray;}
@@ -319,60 +320,92 @@ body {font-family: "Lucide Grande", Verdana, Lucida, Helvetica, Arial, sans-seri
 </head>
 
 <body>
-<div id="header">
- <div class="fltright">
- <b>TickerPlot :</b>
- <a href="{% static "tickp/about.html" %}">about </a> | <a href="{% static "tickp/help.html" %}">help</a>
- </div>
-</div>
-<div id=options">
-    <div id="row1" class="row">
-        <div id="getsymbol" class="chartoption"><b>Ticker:</b>
-            <input type="text" id="scripselect" size="12"></input>
-            <input type="button" id="stockget" value="get"></input>
-	    <div id="loading"> <img src="{% static "tickp/ajax-loader.gif" %}"></img></div>
+<header id="top">
+<nav class="navbar navbar-default navbar-fixed-top">
+  <div class="container-fluid">
+    <div class="navbar-header">
+    </div>
+    <div id="tickerplot_top_navbar" class="navbar-collapse collapse">
+        <!--ul class="nav navbar-nav">
+        </ul-->
+        <ul class="nav navbar-nav navbar-right">
+          <li><a href="{% static "tickp/about.html" %}">about</a></li>
+          <li><a href="{% static "tickp/help.html" %}">help</a></li>
+        </ul>
+    </div>
+  </div> <!--/container -->
+</nav>
+</header>
+<div class="container-fluid" id="tickp-main-container">
+<div class="row panel">
+  <div class="col-sm-3 col-md-2 sidebar">
+  </div>
+  <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
+    <div class="panel">
+      <div class="row">
+        <div class="col-xs-8 col-sm-4">
+        <div id="getsymbol"><b>Ticker:</b>
+          <input type="text" id="scripselect" size="12"></input>
+          <input type="button" id="stockget" value="get"></input>
+          <!--div id="loading"> <img src="{% static "tickp/ajax-loader.gif" %}"></img></div-->
         </div>
-        <div id="timescale" class="chartoption"> <b>Interval:</b>
+        </div>
+        <div class="col-xs-8 col-sm-4">
+          <div id="timescale"> <b>Interval:</b>
             <select id="selectts">
                 <option value="0">Daily</option>
                 <option value="1">Weekly</option>
                 <option value="2">Monthly</option>
             </select>
+          </div>
         </div>
-        <div id="charttype" class="chartoption"> <b>Type:</b>
+        <div class="col-xs-8 col-sm-4">
+          <div id="charttype"> <b>Type:</b>
             <select id="selecttype">
                 <option value="1">Candlesticks</option>
                 <option value="2">Bar charts</option>
                 <option value="3">Line charts</option>
             </select>
+          </div>
         </div>
-        <div id="style" class="chartoption"> <b>Style:</b>
-            <select id="selectstyle">
-                <option value="1">Dark</option>
-                <option value="0">Light</option>
-            </select>
-        </div>
+      </div>
     </div>
-    <div id="row2" class="row">
-        <div id="mode" class="chartoption"> <b>Mode:</b>
-            <select id="selectmode">
-                <option value="1">Pan and Zoom</option>
-                <option value="0">Trendline</option>
-            </select>
-        </div>
-        <div id="scale" class="chartoption"> <b>Scale:</b>
+    <div class="panel">
+      <div class="row">
+        <div class="col-xs-8 col-sm-4">
+          <div id="scale"> <b>Scale:</b>
             <select id="selectscale">
                 <option value="0">Linear</option>
                 <option value="1">Log</option>
             </select>
+          </div>
         </div>
-        <div id="zoom" class="chartoption"><b>Zoom:</b>
+        <div class="col-xs-8 col-sm-4">
+          <div id="mode"> <b>Mode:</b>
+            <select id="selectmode">
+                <option value="1">Pan and Zoom</option>
+                <option value="0">Trendline</option>
+            </select>
+          </div>
+          <div id="zoom"><b>Zoom:</b>
             <input type="button" id="zoomup" value="+"></input>
             <input type="button" id="zoomdn" value="-"></input>
+          </div>
         </div>
+        <div class="col-xs-8 col-sm-4">
+          <div id="style"> <b>Style:</b>
+            <select id="selectstyle">
+                <option value="1">Dark</option>
+                <option value="0">Light</option>
+            </select>
+          </div>
+        </div>
+      </div>
     </div>
-    <div id="row3" class="row">
-        <div id="indicators" class="chartoption2"><b>Add Indicator:</b>
+    <div class="panel">
+      <div class="row">
+        <div class="col-xs-8 col-sm-6">
+          <div id="indicators"><b>Add Indicator:</b>
             <select id="selectindicator">
                 <option value="ema">EMA</option>
                 <option value="sma">SMA</option>
@@ -381,19 +414,30 @@ body {font-family: "Lucide Grande", Verdana, Lucida, Helvetica, Arial, sans-seri
                 <option value="rsi">RSI</option>
                 <option value="stoch">Stochastics</option>
                 <option value="macd">MACD</option>
+            </select>
             <input type="text" id="paramtxt" size="12"></input>
             <input type="button" id="addind" value="+"></input>
+          </div>
         </div>
-        <div id="current" class="chartoption3"><b>Current Indicators:</b>
+        <div class="col-xs-8 col-sm-2">
+        </div>
+        <div class="col-xs-8 col-sm-4">
+          <div id="current"><b>Current Indicators:</b>
             <select id="selectcurrent"></select>
             <input type="button" id="delind" value="-"></input>
+          </div>
         </div>
+      </div>
     </div>
-</div>
-<div id="chart">
-</div>
+    <div id="chart">
+    </div>
+  </div> <!-- ."col-sm-3 col-md-2 sidebar" -->
 <div id="footer">
     Copyright &copy; 2010, TickerPlot.com
 </div>
+<!--- original code ends -->
+</div>
+</div> <!-- #/tickp-main-container -->
+
 </body>
 </html>
