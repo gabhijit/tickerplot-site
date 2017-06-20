@@ -1,1 +1,4 @@
 **/*pyc
+**/.nsehistdata
+**/*.sqlite3
+**/*.key
