@@ -10,9 +10,10 @@
     <link rel="stylesheet" type="text/css" href="{% static "bootstrap/css/bootstrap.min.css" %}" />
     <script type="text/javascript" src="{% static "jquery/js/jquery-3.2.1.min.js" %}"></script>
     <script type="text/javascript" src="{% static "bootstrap/js/bootstrap.min.js" %}"></script>
+    <!-- bootstrap's typeahead plugin works with bootstrap2 only and dropped in bootstrap3, but it seems it works -->
     <script type="text/javascript" src="{% static "tickp/stats.js" %}"></script>
     <script type="text/javascript" src="{% static "tickp/jsta.js" %}"></script>
-    <link rel="stylesheet" type="text/css" href="{% static "tickp/jquery.autocomplete.css" %}" />
+    <script type="text/javascript" src="{% static "bootstrap/js/bootstrap3-typeahead.min.js" %}"></script>
     <link rel="shortcut icon" type="image/png" href="{% static "tickp/tickerplot.ico" %}">
     <script>
     function defParams() {
@@ -237,12 +238,13 @@
     };
     $(document).ready(function() {
         scrips = undefined;
+	/*
         if($.browser.msie) {
             if($.browser.version < "9.0") {
                 var htmlstr = '<h5> Your browser \'IE : ' + $.browser.version + '\' does not support certain HTML 5 features natively, which we use. You won\'t be able to experience the full capabilities without those. Workarouns include - Using <a href="http://code.google.com/chrome/chromeframe/">Google Chrome Frame</a> Plugin. To read more about \'Google Chrome Frame\' plugin, please read the following <a href="http://en.wikipedia.org/wiki/Google_Chrome_Frame"> article on Wikipedia</a>.'
                 $("#chart").html(htmlstr);
             }
-        }
+        } */
 
         plot = window.tickp("#chart");
         plot.plotempty();
@@ -252,18 +254,14 @@
             dataType : 'json',
             type: 'GET',
             success: function(data) {
+                var $tainput = $(".typeahead");
+		console.log($tainput);
+		var updater_fn = function(val) {console.log(val); return val.symbol};
                 scrips = data;
-                $("#scripselect").autocomplete(scrips, {
-                    matchContains: true,
-                    width:400,
-                    formatResult: function(row) {
-                        return row.symbol;
-                    },
-		            formatItem: function(item) {
-			            return item.symbol + ":" + item.name;
-		            }
-                });
-            }
+		$tainput.typeahead({source:scrips, minLength:2, updater:updater_fn});
+
+
+	    }
         });
         $("#stockget").click(function(event) {
             var symbol = $("#scripselect").val();
@@ -310,7 +308,6 @@ body {padding-top : 50px}
 #mode {margin-left:10px; display:inline;}
 #scale {margin-left:10px; display:inline;}
 #zoom {margin-left: 10px; display:inline;}
-#indicators {margin-left:10px; display:inline;}
 #current {margin-left:10px; display:inline;}
 /* .row {width:800px;margin:10px; display:block; } */
 #header {height:20px; border-bottom: 2px solid gray;}
@@ -336,7 +333,7 @@ body {padding-top : 50px}
   </div> <!--/container -->
 </nav>
 </header>
-<div class="container-fluid" id="tickp-main-container">
+<div class="main " id="tickp-main-container">
 <div class="row panel">
   <div class="col-sm-3 col-md-2 sidebar">
   </div>
@@ -345,7 +342,7 @@ body {padding-top : 50px}
       <div class="row">
         <div class="col-xs-8 col-sm-4">
         <div id="getsymbol"><b>Ticker:</b>
-          <input type="text" id="scripselect" size="12"></input>
+          <input type="text" id="scripselect" data-provide="typeahead" class="typeahead" size="12"></input>
           <input type="button" id="stockget" value="get"></input>
           <!--div id="loading"> <img src="{% static "tickp/ajax-loader.gif" %}"></img></div-->
         </div>
@@ -406,7 +403,7 @@ body {padding-top : 50px}
       <div class="row">
         <div class="col-xs-8 col-sm-6">
           <div id="indicators"><b>Add Indicator:</b>
-            <select id="selectindicator">
+           <select id="selectindicator">
                 <option value="ema">EMA</option>
                 <option value="sma">SMA</option>
                 <option value="psar">PSAR</option>

@@ -2,3 +2,4 @@
 2. Make deployment automatic using fabric.
 3. Fix the NSE historical data using new tools utils to download the data.
 4. Unit testing
+5. Overlay canvas in tickp is offset from the main canvas, fix that.
