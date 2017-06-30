@@ -121,5 +121,6 @@ USE_TZ = True
 STATICFILES_DIRS = [
         'sitewide-static'
         ]
+
 STATIC_ROOT = os.path.join(BASE_DIR, 'static')
 STATIC_URL = '/static/'
