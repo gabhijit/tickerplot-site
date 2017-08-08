@@ -1,0 +1,3 @@
+[submodule "tickerplot/tickerplot_utils"]
+	path = tickerplot/tickerplot_utils
+	url = https://github.com/gabhijit/tickerplot2
