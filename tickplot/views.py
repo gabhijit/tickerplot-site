@@ -1,6 +1,6 @@
 # Create your views here.
-from tickp.models import Scrips , Nsehistdata
-from django.http import HttpResponse
+from tickplot.models import Scrips , Nsehistdata
+from django.http import HttpResponse, HttpResponseRedirect
 
 #templates stuff
 from django.template.loader import get_template
@@ -10,6 +10,36 @@ from django.template import Context
 import json
 import re
 import urllib2
+
+_email_restr = r"(^[a-zA-Z0-9][a-zA-Z0-9+-_]*@[a-zA-Z0-9-]+\.[a-zA-Z]+$)"
+_email_re = re.compile(_email_restr)
+
+def index_placeholder(request):
+
+    if request.method == 'GET':
+        t = get_template('index_placeholder.html')
+        html = t.render(Context({}))
+        return HttpResponse(html)
+
+
+def interest(request):
+
+    global _email_re
+
+    if request.method == 'POST':
+        email = request.POST.get('email')
+        if len(email) < 60:
+            if not _email_re.match(email):
+                return HttpResponse("Sorry Don't recognize that email.")
+
+            with open('interests.txt', 'a+') as f:
+                f.write(email)
+                f.write("\n")
+            return HttpResponse("Success")
+        else:
+            return HttpResponse("Sorry Email Address too long! Try a smaller one.")
+
+    return HttpResponseRedirect("/")
 
 def scriplist(request):
     s = Scrips.objects.all()

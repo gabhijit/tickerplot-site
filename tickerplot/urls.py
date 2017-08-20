@@ -15,8 +15,12 @@ Including another URLconf
 """
 from django.conf.urls import include, url
 from django.contrib import admin
+from tickplot.views import index_placeholder
+from tickplot.views import interest
 
 urlpatterns = [
-    url(r'tickp/', include('tickp.urls')),
+    url(r'^$', index_placeholder),
+    url(r'^interest', interest),
+    url(r'tickp/', include('tickplot.urls')),
     # url(r'^admin/', admin.site.urls),
 ]

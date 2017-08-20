@@ -23,9 +23,9 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 SECRET_KEY = 'yu+da)w!7d_3s+=tf^zy^&l@vj**69p2u79894mdql+w_4f!hw'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 
-ALLOWED_HOSTS = ['127.0.0.1', '192.168.56.2']
+ALLOWED_HOSTS = ['localhost', '127.0.0.1', '192.168.56.2']
 
 
 # Application definition
@@ -44,7 +44,8 @@ MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
-    'django.middleware.csrf.CsrfViewMiddleware',
+    # FIXME: have a look when everything is enabled
+    #'django.middleware.csrf.CsrfViewMiddleware',
     #'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
@@ -118,8 +119,9 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/1.10/howto/static-files/
 
+SITEWIDE_STATIC_DIR = os.path.join(BASE_DIR, 'sitewide-static')
 STATICFILES_DIRS = [
-        'sitewide-static'
+        SITEWIDE_STATIC_DIR
         ]
 
 STATIC_ROOT = os.path.join(BASE_DIR, 'static')
