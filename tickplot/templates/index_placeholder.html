@@ -1,0 +1,28 @@
+{% load static %}
+<!DOCTYPE html>
+<html>
+<head>
+    <!-- tags required by bootstrap -->
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <link rel="stylesheet" type="text/css" href="{% static "bootstrap/css/bootstrap.min.css" %}" />
+    <script type="text/javascript" src="{% static "jquery/js/jquery-3.2.1.min.js" %}"></script>
+    <script type="text/javascript" src="{% static "bootstrap/js/bootstrap.min.js" %}"></script>
+    <!-- bootstrap's typeahead plugin works with bootstrap2 only and dropped in bootstrap3, but it seems it works -->
+<style>
+/* body {font-family: "Lucide Grande", Verdana, Lucida, Helvetica, Arial, sans-serif; font-size:10px;} */
+body {padding-top : 50px}
+</style>
+</head>
+
+<body>
+	<h1 style="text-align:center;color:#8080e0"> It's Brewing, will be Ready Soon!</h1>
+	<div style="display:flex; align-items:center">
+		<form action="/interest" method="post" style="margin:auto; padding-top:20px"> {% csrf_token %}
+		<input type="text" placeholder="Interested? Enter Email" value="" name="email"></input>
+		<input type="submit" value="Buzz Me"/>
+	</form>
+</body>
+</html>
