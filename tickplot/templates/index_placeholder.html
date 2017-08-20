@@ -17,12 +17,14 @@ body {padding-top : 50px}
 </style>
 </head>
 
-<body>
+<body style="font-family:Arial, Helvetica, sans-serif">
 	<h1 style="text-align:center;color:#8080e0"> It's Brewing, will be Ready Soon!</h1>
-	<div style="display:flex; align-items:center">
-		<form action="/interest" method="post" style="margin:auto; padding-top:20px"> {% csrf_token %}
+	<div style="display:flex; align-items:center;">
+		<form action="/interest" method="post" style="display:flex; margin:auto; padding-top:20px"> {% csrf_token %}
 		<input type="text" placeholder="Interested? Enter Email" value="" name="email"></input>
-		<input type="submit" value="Buzz Me"/>
+		<input type="submit" value="Interested"/>
 	</form>
+	</div>
+	<p style="font-size:10px; text-align:center;">We hate spam as much as you, so don't worry!</p>
 </body>
 </html>
