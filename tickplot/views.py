@@ -2,7 +2,7 @@
 ## some utils
 import json
 import re
-import urllib2
+import urllib3
 
 from django.http import HttpResponse, HttpResponseRedirect, JsonResponse
 
@@ -57,7 +57,7 @@ def scripdata(request):
     g = request.GET or request.POST
 
     ### sanitize g['symbol'] and return data for that symbol
-    kiddies = re.findall(r'[^0-9a-zA-Z&]+', urllib2.unquote(g['symbol']))
+    kiddies = re.findall(r'[^0-9a-zA-Z&]+', urllib3.unquote(g['symbol']))
     if kiddies:
         return HttpResponse(403) ## FIXME : Take a closer look
 
