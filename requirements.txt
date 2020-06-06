@@ -1,2 +1,4 @@
 -i https://pypi.org/simple
 django==1.11.29
+pytz==2020.1
+urllib3==1.25.9
